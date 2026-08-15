@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+  <section class="auth-card">
+    <div>
+      <p class="eyebrow">Welcome back</p>
+      <h1>Sign in</h1>
+      <p class="muted">Use your email address and password to get back to your groups.</p>
+    </div>
+    <form method="post" class="form">
+      <label>
+        Email address
+        <input type="email" name="username" required placeholder="maya@example.com">
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" required placeholder="Your password">
+      </label>
+      <button class="button" type="submit">Sign in</button>
+    </form>
+  </section>
+{% endblock %}

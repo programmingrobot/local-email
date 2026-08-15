@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}New group{% endblock %}
+{% block content %}
+  <section class="auth-card">
+    <div>
+      <p class="eyebrow">Start a chat</p>
+      <h1>Create a group</h1>
+      <p class="muted">Groups are invite-only and support text messages plus file attachments.</p>
+    </div>
+    <form method="post" class="form">
+      <label>
+        Group name
+        <input name="name" required placeholder="Project team">
+      </label>
+      <label>
+        Description
+        <textarea name="description" rows="4" placeholder="What is this group for?"></textarea>
+      </label>
+      <button class="button" type="submit">Create group</button>
+    </form>
+  </section>
+{% endblock %}

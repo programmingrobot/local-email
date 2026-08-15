@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Inbox{% endblock %}
+{% block content %}
+  <section class="inbox-layout">
+    <aside class="sidebar">
+      <div class="profile-card">
+        <p class="eyebrow">Your email address</p>
+        <h2>{{ current_user.display_name }}</h2>
+        <p class="copyable">{{ current_user.username }}</p>
+      </div>
+      <a class="button full" href="{{ url_for('new_group') }}">New group</a>
+      <div class="panel">
+        <h3>Recent people</h3>
+        {% for person in people %}
+          <div class="person-row">
+            <span>{{ person.display_name }}</span>
+            <small>{{ person.username }}</small>
+          </div>
+        {% else %}
+          <p class="muted">Create another account to invite more people.</p>
+        {% endfor %}
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Groups</p>
+          <h1>Inbox</h1>
+        </div>
+      </div>
+
+      <div class="group-list">
+        {% for group in groups %}
+          <a class="group-card" href="{{ url_for('group_chat', group_id=group.id) }}">
+            <div>
+              <h2>{{ group.name }}</h2>
+              <p>{{ group.description or "No description yet." }}</p>
+            </div>
+            <div class="group-meta">
+              <span>{{ group.message_count }} messages</span>
+              <span>{{ group.role }}</span>
+            </div>
+          </a>
+        {% else %}
+          <div class="empty-state">
+            <h2>No groups yet</h2>
+            <p>Create a group and invite people using their email addresses.</p>
+            <a class="button" href="{{ url_for('new_group') }}">Create your first group</a>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Tiny Mail Chat{% endblock %}
+{% block content %}
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Private local group mail</p>
+      <h1>Tiny Mail</h1>
+      <p>Create an account with your email address, start a group, invite people, chat, and share files from one clean Flask interface.</p>
+      <div class="hero-actions">
+        <a class="button" href="{{ url_for('register') }}">Create an account</a>
+        <a class="button secondary" href="{{ url_for('login') }}">Sign in</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="mock-window">
+        <div class="mock-header">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="mock-message left">Welcome to the design group.</div>
+        <div class="mock-message right">Uploading the brief now.</div>
+        <div class="mock-file">project-notes.pdf</div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

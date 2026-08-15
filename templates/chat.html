@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}{{ group.name }}{% endblock %}
+{% block content %}
+  <section class="chat-layout">
+    <aside class="sidebar">
+      <a class="back-link" href="{{ url_for('inbox') }}">Back to inbox</a>
+      <div class="profile-card">
+        <p class="eyebrow">Group</p>
+        <h2>{{ group.name }}</h2>
+        <p>{{ group.description or "No description yet." }}</p>
+      </div>
+
+      <form class="invite-box" method="post" action="{{ url_for('invite', group_id=group.id) }}">
+        <h3>Invite by email</h3>
+        <input name="email" type="email" placeholder="maya@example.com" required>
+        <button class="button full" type="submit">Invite</button>
+      </form>
+
+      <div class="panel">
+        <h3>Members</h3>
+        {% for member in members %}
+          <div class="person-row">
+            <span>{{ member.display_name }}</span>
+            <small>{{ member.username }} · {{ member.role }}</small>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="panel">
+        <h3>Invites</h3>
+        {% for invite in invites %}
+          <div class="person-row">
+            <span>{{ invite.invited_email }}</span>
+            <small>{{ invite.status }}</small>
+          </div>
+        {% else %}
+          <p class="muted">No invites sent yet.</p>
+        {% endfor %}
+      </div>
+    </aside>
+
+    <section class="chat-main">
+      <div class="chat-header">
+        <div>
+          <p class="eyebrow">Conversation</p>
+          <h1>{{ group.name }}</h1>
+        </div>
+      </div>
+
+      <div
+        class="message-list"
+        data-message-list
+        data-group-id="{{ group.id }}"
+        data-current-user-id="{{ current_user.id }}"
+      >
+        {% for message in messages %}
+          <article class="message {% if message.user_id == current_user.id %}mine{% endif %}" data-message-id="{{ message.id }}">
+            <div class="message-meta">
+              <strong>{{ message.display_name }}</strong>
+              <span>{{ message.username }}</span>
+            </div>
+            {% if message.body %}
+              <p>{{ message.body }}</p>
+            {% endif %}
+            {% if message.stored_filename %}
+              <a class="attachment" href="{{ url_for('uploaded_file', filename=message.stored_filename) }}">
+                {{ message.original_filename }}
+              </a>
+            {% endif %}
+          </article>
+        {% else %}
+          <div class="empty-state compact" data-empty-state>
+            <h2>Start the conversation</h2>
+            <p>Send a message, attach a file, or invite someone from the side panel.</p>
+          </div>
+        {% endfor %}
+      </div>
+
+      <form class="composer" method="post" enctype="multipart/form-data" action="{{ url_for('send_message', group_id=group.id) }}" data-composer>
+        <textarea name="body" rows="3" placeholder="Write a message"></textarea>
+        <div class="composer-actions">
+          <input type="file" name="attachment">
+          <button class="button" type="submit">Send</button>
+        </div>
+      </form>
+    </section>
+  </section>
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='chat.js') }}"></script>
+{% endblock %}

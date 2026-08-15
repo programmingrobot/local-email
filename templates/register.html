@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+  <section class="auth-card">
+    <div>
+      <p class="eyebrow">New account</p>
+      <h1>Create your inbox</h1>
+      <p class="muted">Your email address is your username. Your display name is the name other people see.</p>
+    </div>
+    <form method="post" class="form">
+      <label>
+        Display name
+        <input name="display_name" placeholder="Maya Chen">
+      </label>
+      <label>
+        Email address
+        <input type="email" name="username" required placeholder="maya@example.com">
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" required placeholder="Choose a password">
+      </label>
+      <button class="button" type="submit">Create account</button>
+    </form>
+  </section>
+{% endblock %}
